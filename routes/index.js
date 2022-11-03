@@ -1,6 +1,13 @@
 var express = require("express");
 var router = express.Router();
 
+var requestTime = function (req, res, next) {
+  req.requestTime = Date.now();
+  next();
+};
+
+router.use(requestTime);
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -9,11 +16,11 @@ router.get("/", function (req, res, next) {
 router.get(
   "/example/b",
   function (req, res, next) {
-    res.send("the response will be sent by the next function ...");
+    console.log(req.requestTime);
     next();
   },
   function (req, res) {
-    res.send("Hello from B!");
+    res.send(String(req.requestTime));
   }
 );
 
