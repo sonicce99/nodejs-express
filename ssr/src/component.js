@@ -1,0 +1,29 @@
+const store = require("./store");
+
+const component = () => `
+<div>
+    <h2>Server-side Rendering</h2>
+    <form>
+        <input class='id' placeholder='아이디' />
+        <input class='name' placeholder='이름'/>
+
+        <button type='button'>등록</button>
+    </form>
+
+    <div>
+        <ul>
+        ${store
+          .getState()
+          .map((obj) => {
+            const { id, name } = obj;
+            return `<li>
+            ${id} (${name})
+            </li>`;
+          })
+          .join("")}
+        </ul>
+    </div>
+</div>
+`;
+
+module.exports = component;
